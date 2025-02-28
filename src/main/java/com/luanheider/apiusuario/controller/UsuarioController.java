@@ -1,6 +1,8 @@
 package com.luanheider.apiusuario.controller;
 
 import com.luanheider.apiusuario.business.UsuarioService;
+import com.luanheider.apiusuario.business.dto.EnderecoDTO;
+import com.luanheider.apiusuario.business.dto.TelefoneDTO;
 import com.luanheider.apiusuario.business.dto.UsuarioDTO;
 import com.luanheider.apiusuario.infrastructure.entity.Usuario;
 import com.luanheider.apiusuario.infrastructure.security.JwtUtil;
@@ -34,7 +36,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam("email") String email) {
+    public ResponseEntity<UsuarioDTO> buscaUsuarioPorEmail(@RequestParam("email") String email) {
         return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email));
     }
 
@@ -48,5 +50,17 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> atualizaDadosUsuario(@RequestBody UsuarioDTO usuarioDTO,
                                                            @RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token, usuarioDTO));
+    }
+
+    @PutMapping("/endereco")
+    public ResponseEntity<EnderecoDTO> atualizaEndereco(@RequestBody EnderecoDTO enderecoDTO,
+                                                        @RequestParam("id") Long id) {
+        return ResponseEntity.ok(usuarioService.atualizaEndereco(id, enderecoDTO));
+    }
+
+    @PutMapping("/telefone")
+    public ResponseEntity<TelefoneDTO> atualizaTelefone(@RequestBody TelefoneDTO telefoneDTO,
+                                                        @RequestParam("id") Long id) {
+        return ResponseEntity.ok(usuarioService.atualizaTelefone(id, telefoneDTO));
     }
 }
